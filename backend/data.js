@@ -32,7 +32,7 @@ const data ={
             category:'Shooter',
             image:'images/p3.jpg',
             price: 60,
-            countInStock: 10,
+            countInStock: 0,
             brand: 'Treyarch',
             rating: 4.5,
             numReviews:10,
