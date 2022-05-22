@@ -1,7 +1,24 @@
+import bcrypt from 'bcryptjs';
+
+
 const data ={
+    users:[
+        {
+            name: 'Bastian',
+            email: 'admin@mail.com',
+            password: bcrypt.hashSync('123456'),
+            isAdmin: true
+        },
+        {
+            name: 'Usuario 2',
+            email: 'user@mail.com',
+            password: bcrypt.hashSync('123456'),
+            isAdmin: false
+        },
+    ],
     products:[
         {
-            _id:'1',
+
             name: 'Call of duty: Black ops 3',
             slug: 'Call-of-duty:-Black-ops-3',
             category:'Shooter',
@@ -15,7 +32,7 @@ const data ={
         
         },
         {
-            _id:'2',
+
             name: 'Call of duty: Modern Warfare',
             slug: 'Call-of-duty:-Modern-Warfare',
             category:'Shooter',
@@ -29,7 +46,6 @@ const data ={
         
         },
         {
-            _id:'3',
             name: 'Call of duty: Word War 2',
             slug: 'Call-of-duty:-WW2',
             category:'Shooter',
