@@ -13,6 +13,10 @@ import Badge from 'react-bootstrap/esm/Badge';
 import { Store } from './store';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
+import SignupScreen from './screens/SignupScreen';
+import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 function App() {
   const {state, dispatch: ctxDispatch} = useContext(Store);
@@ -22,6 +26,8 @@ function App() {
   const signoutHandler = () =>{
     ctxDispatch({type:'USER_SIGNOUT'});
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
   }
 
   return (
@@ -60,9 +66,15 @@ function App() {
                       Sign Out</Link>
                   </NavDropdown>
                 ):(
-                  <Link className="nav-link" to="/signin" >
-                    Signin
-                  </Link>
+                  <div className='d-flex'>
+                      <Link className="nav-link" to="/signin" >
+                      Signin
+                    </Link>
+                    <Link className="nav-link" to="/signup" >
+                      Signup
+                    </Link>
+                  </div>
+        
                 )}
               </Nav>
             </Container>
@@ -76,6 +88,10 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen/>}/>
               <Route path="/cart" element={<CartScreen/>}/>
               <Route path="/signin" element={<SigninScreen/>}/>
+              <Route path="/signup" element={<SignupScreen/>}/>
+              <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
+              <Route path="/payment" element={<PaymentMethodScreen/>}/>
+              <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/" element={<HomeScreen/>}/>
             </Routes>
           </Container>
