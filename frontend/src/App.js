@@ -17,6 +17,8 @@ import SignupScreen from './screens/SignupScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
+import OrderHisotryScreen from './screens/OrderHistoryScreen';
 
 function App() {
   const {state, dispatch: ctxDispatch} = useContext(Store);
@@ -35,51 +37,49 @@ function App() {
       <div className="d-flex flex-column site-container">
         <ToastContainer position="bottom-center" limit={1}/>
         <header>
-          <Navbar bg="dark" variant="dark">
+          <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>Amazona</Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
-                <Link to="/cart" className='nav-link'>
-                Cart
-                {cart.cartItems.length > 0 && (
-                  <Badge pill bg="danger">
-                    {cart.cartItems.reduce((a,c)=> a+c.quantity, 0)}
-                  </Badge>
-                )}
-                </Link>
-                {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Divider/>
-                      <Link
-                       className='dropwdown-item'
-                       to="#signout"
-                       onClick={signoutHandler}
-                      >
-                      Sign Out</Link>
-                  </NavDropdown>
-                ):(
-                  <div className='d-flex'>
-                      <Link className="nav-link" to="/signin" >
-                      Signin
-                    </Link>
-                    <Link className="nav-link" to="/signup" >
-                      Signup
-                    </Link>
-                  </div>
-        
-                )}
-              </Nav>
+
+              <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+              <Navbar.Collapse id="basic-navbar-nav">
+                  <Nav className="me-auto w-100 justify-content-end">
+                      <Link to="/cart" className='nav-link'>
+                        Cart
+                        {cart.cartItems.length > 0 && (
+                          <Badge pill bg="danger">
+                              {cart.cartItems.reduce((a,c)=>a+c.quantity,0)}
+                          </Badge>
+                        )}
+                      </Link>
+                      {userInfo ? (
+                        <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                            <LinkContainer to="/profile">
+                              <NavDropdown.Item>User Profile</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/orderhistory">
+                              <NavDropdown.Item>Order History</NavDropdown.Item>
+                            </LinkContainer>
+                            <NavDropdown.Divider/>
+                            <Link
+                              className='dropdown-item'
+                              onClick={signoutHandler}
+                              to="#signout"
+                            >Sign Out</Link>
+                        </NavDropdown>
+                      ):(
+                        <Link className="nav-link" to="/signin">
+                          Sign In 
+                        </Link>
+                      )}
+                  </Nav>
+              </Navbar.Collapse>
+
+              
             </Container>
           </Navbar>
-          <Link to="/">Amazona</Link>
         </header>
 
         <main>
@@ -90,6 +90,8 @@ function App() {
               <Route path="/signin" element={<SigninScreen/>}/>
               <Route path="/signup" element={<SignupScreen/>}/>
               <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
+              <Route path="/order/:id" element={<OrderScreen/>}/>
+              <Route path="/orderhistory" element={<OrderHisotryScreen/>}/>
               <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/" element={<HomeScreen/>}/>
