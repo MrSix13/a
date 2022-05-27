@@ -86,14 +86,14 @@ function App() {
           <Container className='mt-3'>
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen/>}/>
+              <Route path="/orderhistory" element={<OrderHisotryScreen/>}/>
               <Route path="/cart" element={<CartScreen/>}/>
               <Route path="/signin" element={<SigninScreen/>}/>
               <Route path="/signup" element={<SignupScreen/>}/>
               <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
               <Route path="/order/:id" element={<OrderScreen/>}/>
-              <Route path="/orderhistory" element={<OrderHisotryScreen/>}/>
-              <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
+              <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/" element={<HomeScreen/>}/>
             </Routes>
           </Container>
@@ -106,5 +106,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;

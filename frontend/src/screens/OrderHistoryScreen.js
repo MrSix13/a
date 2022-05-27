@@ -35,7 +35,7 @@ export default function OrderHistoryScreen(){
             dispatch({type:'FETCH_REQUEST'})
             try {
                 const {data} = await axios.get(
-                    `/api/orders/mine`,
+                    '/api/orders/mines',
                     {headers:{Authorization:`Bearer ${userInfo.token}`}}
                 )
                 dispatch({type:'FETCH_SUCCESS', payload:data})
@@ -43,7 +43,7 @@ export default function OrderHistoryScreen(){
                 dispatch({
                     type:'FETCH_FAIL',
                     payload: getError(error)
-                });
+                })
             }
         };
         fetchData()
@@ -60,7 +60,16 @@ export default function OrderHistoryScreen(){
                 <MessageBox variant="danger">{error}</MessageBox>
             ):(
                 <table>
-                    
+                    <thead>
+                        <tr>
+                            <ts>ID</ts>
+                            <ts>DATE</ts>
+                            <ts>TOTAL</ts>
+                            <ts>PAID</ts>
+                            <ts>DELIVERED</ts>
+                            <ts>ACTIONS</ts>
+                        </tr>
+                    </thead>
                 </table>
             )}
         </div>

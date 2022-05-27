@@ -62,10 +62,11 @@ orderRouter.put(
 
 
 orderRouter.get(
-  '/mine',
+  '/mines',
   isAuth,
-  expressAsyncHandler(async(req,res)=>{
-    const orders = await Order.find({users:req.user._id});
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    console.log(orders)
     res.send(orders);
   })
 );
