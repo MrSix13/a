@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/MrSix13/a/issues"
   },
-  "homepage": "https://github.com/MrSix13/a#readme"
+  "homepage": "https://github.com/MrSix13/a#readme",
+  "engines":{
+    "node": "16.8.0"
+  }
 }
