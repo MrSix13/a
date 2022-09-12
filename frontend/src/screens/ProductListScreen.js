@@ -33,6 +33,18 @@ const reducer = (state,action) =>{
             }
         case 'CREATE_FAIL':
             return {...state, loadingCreate:false}
+        case 'DELETE_REQUEST':
+            return {...state,loadingDelete:true, succcessDelete:false}
+        case'DELETE_SUCCESS':
+            return{
+                ...state,
+                loadingDelete:false,
+                successDelete:true
+            }
+        case 'DELETE_FAIL':
+            return{...state, loadingDelete:false, successDelte:false}
+        case 'DELETE_RESET':
+            return{...state,loadingDelete:false,SuccessDelete:false}
         default:
             return state;
     }
@@ -40,7 +52,16 @@ const reducer = (state,action) =>{
 
 export default function ProductListScreen() {
 
-    const [{loading,error,products,pages, loadingCreate},dispatch] = useReducer(reducer,{
+    const [
+        {
+            loading,
+            error,
+            products,
+            pages, 
+            loadingCreate,
+            loadingDelete,
+            successDelte
+        },dispatch] = useReducer(reducer,{
         loading: true,
         error: ''
     });
@@ -64,8 +85,12 @@ export default function ProductListScreen() {
                 
             }
         }
-        fetchData();
-    },[page, userInfo])
+        if(successDelte){
+            dispatch({type:'DELETE:RESET'});
+        }else{
+            fetchData();
+        }
+    },[page, userInfo, successDelte])
 
     const createHandler = async () =>{
         if(window.confirm('Estas seguro de crear un nuevo producto?')){
@@ -89,7 +114,22 @@ export default function ProductListScreen() {
             }
         }
     }
-
+    const deleteHandler = async(product) =>{
+        if(window.confirm('Estas seguro de borrar?')){
+            try {
+                await axios.delete(`/api/products/${product._id}`, {
+                    headers: { Authorization: `Bearer ${userInfo.token}` },
+                  });
+                  toast.success('Producto eliminado correctamente');
+                  dispatch({type:'DELETE_SUCCESS'});
+            } catch (err) {
+                toast.error(getError(error));
+                dispatch({
+                    type:'DELETE_FAIL'
+                })
+            }
+        }
+    }
   return (
     <div>
         <Row>
@@ -104,6 +144,9 @@ export default function ProductListScreen() {
                 </div>
             </Col>
         </Row>
+        {loadingCreate && <LoadingBox></LoadingBox>}
+        {loadingDelete && <LoadingBox></LoadingBox>}
+
         {loading ? (
             <LoadingBox></LoadingBox>
         ) : error  ? (
@@ -121,13 +164,28 @@ export default function ProductListScreen() {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product)=>(
-                            <tr>
+                        {products.map((product, index)=>(
+                            <tr key={index}>
                             <td>{product._id}</td>
                             <td>{product.name}</td>
                             <td>{product.price}</td>
                             <td>{product.category}</td>
                             <td>{product.brand}</td>
+                            <td>
+                                <Button
+                                    type="button"
+                                    variant="light"
+                                    onClick={() => navigate(`/admin/product/${product._id}`)}
+                                >Edit</Button>
+                                  &nbsp;
+                                <Button
+                                    type="button"
+                                    variant="light"
+                                    onClick={() => deleteHandler(product)}
+                                    >
+                                    Delete
+                                </Button>
+                            </td>
                         </tr>
                         ))}
                     </tbody>

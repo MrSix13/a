@@ -71,6 +71,7 @@ function ProductScreen(){
         ctxDispatch({type:'CART_ADD_ITEM', payload:{...product,quantity}});
         navigate('/cart')
     }
+    console.log(product.image)
 
     return (
         loading? (<div><LoadingBox/></div>)
